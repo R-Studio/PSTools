@@ -21,8 +21,7 @@ Function Get-NetworkAdapterConnectionStatus {
  
     $networks = Get-WmiObject -Class Win32_NetworkAdapter -ComputerName $computername
     $networkName = @{name="NetworkName";Expression={$_.Name}}
-    $networkStatus = @{name="Networkstatus";Expression=` 
-    {$statushash[[int32]$($_.NetConnectionStatus)]}}
+    $networkStatus = @{name="Networkstatus";Expression={$statushash[[int32]$($_.NetConnectionStatus)]}}
  
     foreach ($network in $networks) {
         $network | Select-Object $networkName, $Networkstatus
