@@ -1,4 +1,4 @@
-Function Test-ConnectionLoop {
+Function Test-NetConnectionLoop {
     [CmdletBinding()]
  
     param(
