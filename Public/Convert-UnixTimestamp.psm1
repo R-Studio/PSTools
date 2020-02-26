@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    This functions converts a Unix Timestamp (Epoche Time) in a readable date format.
+    This function converts a Unix Timestamp (Epoche Time) in a readable date format.
 .DESCRIPTION
-    This functions converts a Unix Timestamp (Epoche Time) in a readable date format.
+    This function converts a Unix Timestamp (Epoche Time) in a readable date format.
 .NOTES
     Author: Robin Hermann
 .LINK
