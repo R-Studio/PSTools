@@ -1,4 +1,4 @@
-Function Remove-UpdateFromWSUS {
+Function Remove-WindowsUpdateFromWSUS {
     [CmdletBinding()]
  
     param (

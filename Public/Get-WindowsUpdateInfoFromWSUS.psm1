@@ -1,4 +1,4 @@
-Function Get-UpdateFromWSUSInfo {
+Function Get-WindowsUpdateInfoFromWSUS {
     [CmdletBinding()]
  
     param (
