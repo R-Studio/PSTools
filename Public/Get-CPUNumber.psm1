@@ -1,23 +1,18 @@
 <#
 .SYNOPSIS
-Get the number of CPU's, Cores, logical Processors. 
- 
+    Get the number of CPU's, Cores, logical Processors. 
 .DESCRIPTION
-Get the number of CPU's, Cores, logical Processors.
- 
+    Get the number of CPU's, Cores, logical Processors locally or remotely.
 .NOTES
-Author: Robin Hermann
- 
+    Author: Robin Hermann
 .LINK
-http://wiki.webperfect.ch
- 
+    http://wiki.webperfect.ch
 .EXAMPLE
-Get-CPUNumber
-Get the CPU infos locally.
-
+    Get-CPUNumber
+    Get the CPU infos locally.
 .EXAMPLE
-Get-CPUNumber -ComputerName <Hostname>
-Get the CPU infos remotely.
+    Get-CPUNumber -ComputerName <Hostname>
+    Get the CPU infos remotely.
 #>
 
 Function Get-CPUNumber {
