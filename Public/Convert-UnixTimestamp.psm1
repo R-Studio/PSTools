@@ -1,3 +1,20 @@
+<#
+.SYNOPSIS
+This functions converts a Unix Timestamp (Epoche Time) in a readable date format.
+ 
+.DESCRIPTION
+This functions converts a Unix Timestamp (Epoche Time) in a readable date format.
+ 
+.NOTES
+Author: Robin Hermann
+ 
+.LINK
+http://wiki.webperfect.ch
+ 
+.EXAMPLE
+Convert-UnixTimestamp 1582719397
+#>
+
 Function Convert-UnixTimestamp {
     Param(
         [Parameter(Mandatory=$true)][int64]$udate
