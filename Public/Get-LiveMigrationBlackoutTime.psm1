@@ -11,7 +11,7 @@ Function Get-LiveMigrationBlackoutTime {
     process{
         $ErrorActionPreference = "SilentlyContinue"
  
-        $eventsnormal = (Get-ClusterNode -Cluster $Cluster).Name | foreach {Get-WinEvent -ComputerName $_ -FilterHashtable @{LogName = 'Microsoft-Windows-Hyper-V-VMMS-Admin'; ID = 20415,20417; StartTime = ((Get-Date).AddDays($EventlogAge))}} #| select TimeCreated, Id, Message, MachineName
+        $eventsnormal = (Get-ClusterNode -Cluster $Cluster).Name | ForEach-Object {Get-WinEvent -ComputerName $_ -FilterHashtable @{LogName = 'Microsoft-Windows-Hyper-V-VMMS-Admin'; ID = 20415,20417; StartTime = ((Get-Date).AddDays($EventlogAge))}} #| select TimeCreated, Id, Message, MachineName
         $HyperVNode = $events.MachineName
  
         $obj = foreach ($event in $eventsnormal) {  
