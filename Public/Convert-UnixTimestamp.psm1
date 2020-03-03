@@ -17,14 +17,17 @@ Function Convert-UnixTimestamp {
     )
  
     $Timezone = (Get-TimeZone)
-    $Timezone.BaseUtcOffset.TotalSeconds
-    # Temp. Remove wrong calculation with DaylighSavingTime
+    
+    #Temp. Remove wrong calculation with DaylightSavingTime
     <#
     If ($Timezone.SupportsDaylightSavingTime -eq $True){
         $TimeAdjust =  ($Timezone.BaseUtcOffset.TotalSeconds + 3600)
     } Else {
         $TimeAdjust = ($Timezone.BaseUtcOffset.TotalSeconds)
     }#>
+
+    #Maybe fixing DaylightSavingTime
+    $TimeAdjust = $Timezone.BaseUtcOffset.TotalSeconds
     
     # Adjust time from UTC to local based on offset that was determined before.
     $udate = ($udate + $TimeAdjust)
