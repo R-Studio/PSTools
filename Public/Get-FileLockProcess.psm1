@@ -229,7 +229,7 @@ function Get-FileLockProcess {
 "@
  
         $CheckMyCoreUtilsDownloadIdLoaded = $CurrentlyLoadedAssemblies | Where-Object {$_.ExportedTypes -like "MyCore.Utils.FileLockUtil*"}
-        if ($CheckMyCoreUtilsDownloadIdLoaded -eq $null) {
+        if ($null -eq $CheckMyCoreUtilsDownloadIdLoaded) {
             Add-Type -ReferencedAssemblies $ReferencedAssemblies -TypeDefinition $TypeDefinition
         }
         else {
@@ -238,11 +238,11 @@ function Get-FileLockProcess {
  
         $Result = [MyCore.Utils.FileLockUtil]::WhoIsLocking($FilePath)
     }
-    if ($PSVersionTable.Platform -ne $null -and $PSVersionTable.Platform -ne "Win32NT") {
+    if ($null -ne $PSVersionTable.Platform -and $PSVersionTable.Platform -ne "Win32NT") {
         $lsofOutput = lsof $FilePath
  
         function Parse-lsofStrings ($lsofOutput, $Index) {
-            $($lsofOutput[$Index] -split " " | foreach {
+            $($lsofOutput[$Index] -split " " | ForEach-Object {
                 if (![String]::IsNullOrWhiteSpace($_)) {
                     $_
                 }
