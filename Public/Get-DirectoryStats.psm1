@@ -1,3 +1,21 @@
+<#
+.SYNOPSIS
+    List directories and size in the current path.
+.DESCRIPTION
+    List directories and size in the current path to find quickly the directories that use a huge amount of diskspace. 
+    This works also for shares.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Get-DirectoryStats
+    List directories and size in the current path.
+.EXAMPLE
+    Get-DirectoryStats -Path "\\hostname\share"
+    List directories and size of a remote share or a normal path.
+#>
+
 Function Get-DirectoryStats {
     param(
         [Parameter(Position=0)]
