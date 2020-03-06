@@ -1,5 +1,6 @@
 # PSTools
 A PowerShell module with some usefull PowerShell functions
+-> This repository is still in progress
 
 # To-Do's
 * Adding Descriptions/Helps to all functions
