@@ -14,14 +14,11 @@
 
 Function Get-MountPointsAndUserDisks {
     param(
-        [string]$ComputerName
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]    
+        [string] $ComputerName
     )
  
-    If (!($ComputerName)) {
-        $ComputerName = $env:COMPUTERNAME
-    }
- 
-    Get-WmiObject Win32_Volume -Filter "DriveType='3'" -ComputerName $ComputerName | ForEach-Object {
+    Get-WmiObject Win32_Volume -Filter "DriveType='3'" @PSBoundParameters | ForEach-Object {
         New-Object PSObject -Property @{
             Name = $_.Name
             Label = $_.Label

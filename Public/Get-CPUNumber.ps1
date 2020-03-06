@@ -17,7 +17,7 @@
 
 Function Get-CPUNumber {
     param (
-        [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]    
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]
         [String] $ComputerName
     )
 
