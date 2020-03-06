@@ -66,7 +66,8 @@ PowerShellVersion = '5.1'
 # FormatsToProcess = 'PSTools.Format.ps1xml'
 
 # Die Module, die als geschachtelte Module des in "RootModule/ModuleToProcess" angegebenen Moduls importiert werden sollen.
-#NestedModules = @()
+# NestedModules = @()
+
 # Aus diesem Modul zu exportierende Funktionen. Um optimale Leistung zu erzielen, verwenden Sie keine Platzhalter und löschen den Eintrag nicht. Verwenden Sie ein leeres Array, wenn keine zu exportierenden Funktionen vorhanden sind.
 FunctionsToExport = @('*')
 
