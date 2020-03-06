@@ -1,11 +1,31 @@
+<#
+.SYNOPSIS
+    Get the BlackoutTime of each LiveMigration.
+.DESCRIPTION
+    Get the BlackoutTime of each LiveMigration from the Windows Eventlogs from all clusternodes.
+    The BlackoutTime is the time for the last transfer of the state of a VM in a LiveMigration process.
+    More informations: http://wiki.webperfect.ch/index.php?title=Blackout-Time_(VM_Live_Migration)
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Get-LiveMigrationBlackoutTime -Cluster <YourCluster> -EventlogAge <-3>
+    Get the BlackoutTime of each LiveMigration (between now and 3 days ago).
+#>
+
 Function Get-LiveMigrationBlackoutTime {
     [CmdletBinding()]
  
     param(
-        [Parameter(Position=0,mandatory=$true)][string] $Cluster,
-        [Parameter(Position=1,mandatory=$true)][int] $EventlogAge,
+        [Parameter(Position=0,mandatory=$true)]
+        [string] $Cluster,
+
+        [Parameter(Position=1,mandatory=$true)]
+        [int] $EventlogAge,
+
         [ValidateSet("VMName", "BlackoutTime","TimeCreated")]
-	    [String]$Sortby = "BlackoutTime"
+	    [String] $Sortby = "BlackoutTime"
     )
  
     process{
