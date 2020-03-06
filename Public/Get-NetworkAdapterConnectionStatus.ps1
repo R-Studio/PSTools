@@ -1,6 +1,24 @@
+<#
+.SYNOPSIS
+    Get NIC status.
+.DESCRIPTION
+    Get NIC status with more details then in the built-in windows command.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Get-NetworkAdapterConnectionStatus
+    Get NIC status locally.
+.EXAMPLE
+    Get-NetworkAdapterConnectionStatus -ComputerName <Hostname>
+    Get NIC status remotely.
+#>
+
 Function Get-NetworkAdapterConnectionStatus {
     param(
-        $ComputerName=$env:computername
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]        
+        [string]$ComputerName
     )
  
     $statushash = @{
@@ -19,7 +37,7 @@ Function Get-NetworkAdapterConnectionStatus {
         12 = "Credentials Required"
     }
  
-    $networks = Get-WmiObject -Class Win32_NetworkAdapter -ComputerName $computername
+    $networks = Get-WmiObject -Class Win32_NetworkAdapter @PSBoundParameters
     $networkName = @{name="NetworkName";Expression={$_.Name}}
     $networkStatus = @{name="Networkstatus";Expression={$statushash[[int32]$($_.NetConnectionStatus)]}}
  
