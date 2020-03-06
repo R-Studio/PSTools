@@ -13,8 +13,8 @@ Function Get-vNetworkTrafficCIM {
     [CmdletBinding()]
  
     param(
-        [Parameter(Position=0,mandatory=$false,HelpMessage="ComputerName of the remote Hyper-V Node")]
-        [string] $ComputerName = $env:COMPUTERNAME,
+        [Parameter(Position=0,mandatory=$false,HelpMessage="ComputerName of a remote Hyper-V Node")]
+        [string] $ComputerName,
  
         [Parameter(Position=1,mandatory=$false,HelpMessage="VMName")]
         [string] $VMName,
@@ -31,9 +31,9 @@ Function Get-vNetworkTrafficCIM {
  
     process {
         If ($VMName -eq $null) {
-            $WMICounters = (Get-CimInstance "Win32_PerfFormattedData_NvspNicStats_HyperVVirtualNetworkAdapter" -ComputerName $ComputerName) | Where-Object {($_.Name -notlike "*__TEAMNIC*") -and ($_.Name -notlike "*__DEVICE*")} | select Name, BytesReceivedPersec, BytesSentPersec
+            $WMICounters = (Get-CimInstance "Win32_PerfFormattedData_NvspNicStats_HyperVVirtualNetworkAdapter" @PSBoundParameters) | Where-Object {($_.Name -notlike "*__TEAMNIC*") -and ($_.Name -notlike "*__DEVICE*")} | Select-Object Name, BytesReceivedPersec, BytesSentPersec
         } Else {
-            $WMICounters = (Get-CimInstance "Win32_PerfFormattedData_NvspNicStats_HyperVVirtualNetworkAdapter" -ComputerName $ComputerName) | Where-Object {($_.Name -match $VMName) -and ($_.Name -notlike "*__TEAMNIC*") -and ($_.Name -notlike "*__DEVICE*")} | select Name, BytesReceivedPersec, BytesSentPersec
+            $WMICounters = (Get-CimInstance "Win32_PerfFormattedData_NvspNicStats_HyperVVirtualNetworkAdapter" @PSBoundParameters) | Where-Object {($_.Name -match $VMName) -and ($_.Name -notlike "*__TEAMNIC*") -and ($_.Name -notlike "*__DEVICE*")} | Select-Object Name, BytesReceivedPersec, BytesSentPersec
         }
  
         $PSObject = @()
@@ -42,14 +42,14 @@ Function Get-vNetworkTrafficCIM {
             #Write-Host $Counter -ForegroundColor Green #Enable for Debugging
  
             If ($Unit -eq "MB/s") {
-                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1024/1024),2)
-                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1024/1024),2)
+                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1MB),2)
+                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1MB),2)
             } ElseIf ($Unit -eq "KB/s") {
-                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1024),2)
-                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1024),2)
+                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1KB),2)
+                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1KB),2)
             } Else {
-                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1024),2)
-                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1024),2)
+                $ReceiveRoundedValueIn = [math]::Round(($Counter.BytesReceivedPersec/1KB),2)
+                $SentRoundedValueIn = [math]::Round(($Counter.BytesSentPersec/1KB),2)
             }
  
             $PSObjectReceive = New-Object PSCustomObject -Property @{
