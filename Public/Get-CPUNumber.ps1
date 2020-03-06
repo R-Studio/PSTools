@@ -17,18 +17,19 @@
 
 Function Get-CPUNumber {
     param (
-        [String]$ComputerName = $env:COMPUTERNAME
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]    
+        [String] $ComputerName
     )
 
     process{
         $CPUProperty = "NumberOfCores","NumberOfLogicalProcessors"
-        $NumberOfCPUs = (Get-WmiObject -class win32_processor -computername $ComputerName).Count
+        $NumberOfCPUs = (Get-WmiObject -class win32_processor @PSBoundParameters).Count
         If ($null -eq $NumberOfCPUs) {
             $NumberOfCPUs = 1
         }
 
-        $NumberOfCores = (Get-WmiObject -class win32_processor -computername $ComputerName -Property $CPUProperty).NumberOfCores | Select-Object -First 1
-        $NumberOfLPs = (Get-WmiObject -class win32_processor -computername $ComputerName -Property $CPUProperty).NumberOfLogicalProcessors | Select-Object -First 1
+        $NumberOfCores = (Get-WmiObject -class win32_processor @PSBoundParameters -Property $CPUProperty).NumberOfCores | Select-Object -First 1
+        $NumberOfLPs = (Get-WmiObject -class win32_processor @PSBoundParameters -Property $CPUProperty).NumberOfLogicalProcessors | Select-Object -First 1
         $TotalNumberOfLPs = $NumberOfCPUs * $NumberOfLPs
 
         $obj1 = new-object PSObject -Property @{
