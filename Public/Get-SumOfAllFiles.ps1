@@ -27,29 +27,31 @@ Function Get-SumOfAllFiles {
     Param (
         [Parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]
         [string] $Path,
+
         [Parameter(Mandatory=$false, Position=1)]
         [int] $TimePeriodToNow,
+        
         [Parameter(Mandatory=$false, Position=2)]
         [string] $Unit
     )
  
     Process {
-        $SumLastFilesSizes = Get-ChildItem -Path $Path -File -Recurse | Where-Object {$_.CreationTime -gt ((Get-Date).AddDays($TimePeriodToNow))} | Measure-Object -Sum Length
+        $SumLastFilesSizes = Get-ChildItem -Path $Path -File -Recurse -Force | Where-Object {$_.CreationTime -gt ((Get-Date).AddDays($TimePeriodToNow))} | Measure-Object -Sum Length
  
         If ($Unit -eq "GB") {
-            $SumLastFilesSizesInGB = ((($SumLastFilesSizes).Sum)/1024/1024/1024)
+            $SumLastFilesSizesInGB = ((($SumLastFilesSizes).Sum)/1GB)
             Write-Host "$SumLastFilesSizesInGB GB"
         } ElseIf ($Unit -eq "MB") {
-            $SumLastFilesSizesInMB = ((($SumLastFilesSizes).Sum)/1024/1024)
+            $SumLastFilesSizesInMB = ((($SumLastFilesSizes).Sum)/1MB)
             Write-Host "$SumLastFilesSizesInMB MB"
         } ElseIf ($Unit -eq "KB") {
-            $SumLastFilesSizesInKB = ((($SumLastFilesSizes).Sum)/1024)
+            $SumLastFilesSizesInKB = ((($SumLastFilesSizes).Sum)/1KB)
             Write-Host "$SumLastFilesSizesInKB KB"
         } ElseIf ($Unit -eq "B") {
             $SumLastFilesSizesInB = ($SumLastFilesSizes).Sum
             Write-Host "$SumLastFilesSizesInB Bytes"
         } Else {
-            $SumLastFilesSizesInGB = ((($SumLastFilesSizes).Sum)/1024/1024/1024)
+            $SumLastFilesSizesInGB = ((($SumLastFilesSizes).Sum)/1GB)
             Write-Host "$SumLastFilesSizesInGB GB"
         }
     }
