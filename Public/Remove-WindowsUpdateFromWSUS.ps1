@@ -1,3 +1,17 @@
+<#
+.SYNOPSIS
+    Remove a Windows Update from WSUS.
+.DESCRIPTION
+    Use the function "Get-WindowsUpdateInfoFromWSUS" to get the ID/GUID of a update you want to remove.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Remove-WindowsUpdateFromWSUS -WSUSServer <YourWSUS> -RemoveUpdateID <ID/GUID_of_the_Patch>
+    Remove a Windows Update from WSUS.
+#>
+
 Function Remove-WindowsUpdateFromWSUS {
     [CmdletBinding()]
  
@@ -26,7 +40,7 @@ Function Remove-WindowsUpdateFromWSUS {
  
         #UpdateID (GUID of the update) to delete 
         If (!$RemoveUpdateID) {
-            $IDOfUpdateToRemove = ($WSUS.GetUpdates() | ? {$_.Title -match $KB}).Id.UpdateId.ToString()
+            $IDOfUpdateToRemove = ($WSUS.GetUpdates() | Where-Object {$_.Title -match $KB}).Id.UpdateId.ToString()
             $RemoveUpdateID = $IDOfUpdateToRemove
         }
  
