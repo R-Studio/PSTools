@@ -3,6 +3,7 @@ A PowerShell module with some usefull PowerShell functions
 -> This repository is still in progress
 
 # To-Do's
+* Replace all "env:COMPUTERNAME" with @PSBoundParameters
 * Adding Descriptions/Helps to all functions
 
 
