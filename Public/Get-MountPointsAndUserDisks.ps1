@@ -1,4 +1,16 @@
-#Get all Mountpoints and also all UserDisks (Roaming Profiles on VHDX)
+<#
+.SYNOPSIS
+    Get all mountpoints and all UserProfileDisks (Roaming Profiles as a VHDX).
+.DESCRIPTION
+    This function is usefull to get how much free disk space is available in UserProfileDisks.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Get-MountPointsAndUserDisks
+    Get all mountpoints and all UserProfileDisks of the local system.
+#>
 
 Function Get-MountPointsAndUserDisks {
     param(
