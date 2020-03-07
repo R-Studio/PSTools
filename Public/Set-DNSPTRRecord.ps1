@@ -1,3 +1,17 @@
+<#
+.SYNOPSIS
+    Sets the PTR-Record on Microsoft DNS Server.
+.DESCRIPTION
+    Sets the PTR-Record for each record on Microsoft DNS Server from the forward zone.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Set-DNSPTRRecord -ForwardZone <DOMAIN.NAME> -ReverseZone <1.16.172.in-addr.arpa>
+    Sets the PTR-Record for each record on Microsoft DNS Server from the forward zone on the actual domain controller.
+#>
+
 Function Set-DNSPTRRecord {
     [CmdletBinding()]
     #$ErrorActionPreference = "SilentlyContinue" 
@@ -5,13 +19,14 @@ Function Set-DNSPTRRecord {
     param (
         [Parameter(Position=0,mandatory=$true,HelpMessage="Type Forward lookup zone name in format - DOMAIN.NAME")]
         [string]$ForwardZone,
+
         [Parameter(Position=1,mandatory=$true,HelpMessage="Reverse lookup zone name in format - 1.16.172.in-addr.arpa")]
         [string]$ReverseZone
     )
  
     process {
         $DomainController = Get-ADDomainController | Select-Object -ExpandProperty Name 
-        $Records = Get-DnsServerResourceRecord -ComputerName $DomainController -ZoneName $ForwardZone -RRType A | Where-Object {$_.HostName -notlike "*DnsZones*" -and $_.HostName -notlike "*@*"} | Select RecordData,Hostname 
+        $Records = Get-DnsServerResourceRecord -ComputerName $DomainController -ZoneName $ForwardZone -RRType A | Where-Object {$_.HostName -notlike "*DnsZones*" -and $_.HostName -notlike "*@*"} | Select-Object RecordData, Hostname 
  
         foreach ($Record in $Records) { 
             $Domain = ($env:USERDNSDOMAIN.ToString().ToLower())
