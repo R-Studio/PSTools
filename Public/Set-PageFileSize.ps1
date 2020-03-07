@@ -1,3 +1,21 @@
+<#
+.SYNOPSIS
+    Configure the PageFile location/drive, initialsize and maximumsize.
+.DESCRIPTION
+    Configure the PageFile location/drive, initialsize and maximumsize.    
+    IMPORTANT: 
+    The AutomaticManagedPagefile property determines whether the system managed pagefile is enabled. 
+    This capability is not available on windows server 2003,XP and lower versions.
+    Only if it is NOT managed by the system and will also allow you to change these.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Set-PageFileSize -DriveLetter <DriveLetter> -InitialSize <InitialSize> -MaximumSize <MaximumSize>
+    Configure the PageFile location/drive, initialsize and maximumsize.
+#>
+
 Function Set-PageFileSize {
     [CmdletBinding()]
     Param(
@@ -16,9 +34,6 @@ Function Set-PageFileSize {
     )
     Begin {}
     Process {
-        #The AutomaticManagedPagefile property determines whether the system managed pagefile is enabled. 
-        #This capability is not available on windows server 2003,XP and lower versions.
-        #Only if it is NOT managed by the system and will also allow you to change these.
         try {
             $Sys = Get-CimInstance -ClassName Win32_ComputerSystem -ErrorAction Stop 
         } catch {
@@ -27,7 +42,7 @@ Function Set-PageFileSize {
      
         If($Sys.AutomaticManagedPagefile) {
             try {
-                $Sys | Set-CimInstance -Property @{ AutomaticManagedPageFile = $false } -ErrorAction Stop
+                $Sys | Set-CimInstance -Property @{AutomaticManagedPageFile = $false} -ErrorAction Stop
                 Write-Verbose -Message "Set the AutomaticManagedPageFile to false"
             } catch {
                 Write-Warning -Message "Failed to set the AutomaticManagedPageFile property to false in  Win32_ComputerSystem class because $($_.Exception.Message)"
@@ -48,6 +63,7 @@ Function Set-PageFileSize {
                 Write-Warning -Message "Failed to delete pagefile the Win32_PageFileSetting class because $($_.Exception.Message)"
             }
         }
+
         try {
             New-CimInstance -ClassName Win32_PageFileSetting -Property  @{Name= "$($DriveLetter):\pagefile.sys"} -ErrorAction Stop | Out-Null
      
@@ -63,5 +79,6 @@ Function Set-PageFileSize {
             Write-Warning "Pagefile configuration changed on computer '$Env:COMPUTERNAME'. The computer must be restarted for the changes to take effect."
         }
     }
+
     End {}
-    }
+}
