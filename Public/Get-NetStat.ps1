@@ -12,6 +12,9 @@
     Get-NetStat
     Get information about TCP & UDP connections.
 .EXAMPLE
+    Get-NetStat -ListeningProtocol UDP
+    Get information about all UDP connections.
+.EXAMPLE
     Get-NetStat -AllConnections
     Get information about all TCP & UDP connections.
 #>
@@ -22,11 +25,9 @@ function Get-NetStat {
     [OutputType([int])]
     
     Param (
-        # Param1 help description
         [Parameter(Mandatory=$false,ValueFromPipelineByPropertyName=$true,Position=0)]
         [switch]$AllConnections,
 
-        # Param2 help description
         [ValidateSet('TCP', 'UDP')]
         $ListeningProtocol
     )

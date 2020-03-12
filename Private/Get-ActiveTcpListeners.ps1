@@ -12,8 +12,8 @@ function Get-ActiveTcpListeners {
     $networkObject.GetActiveTcpListeners() | ForEach-Object {
         $props = [PSCustomObject]@{
             Protocol          = 'TCP'
-            'Local Address'   = "$($_.get_Address().IPAddressToString):$($_.get_Port())"
-            'Foreign Address' = Convert-NetStatRemoteEndpoint -Address $_.get_address().IPAddressToString -Port $_.get_Port()
+            'LocalAddress'   = "$($_.get_Address().IPAddressToString):$($_.get_Port())"
+            'ForeignAddress' = Convert-NetStatRemoteEndpoint -Address $_.get_address().IPAddressToString -Port $_.get_Port()
             State             = 'LISTENING'
         }
         Write-Output $props
