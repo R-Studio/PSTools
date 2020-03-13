@@ -5,17 +5,16 @@
     Set Windows PowerPlans locally or remotely.
 .NOTES
     Author: Robin Hermann
+    Open: 
+        Bug: If you select a PowerPlan with whitespaces then you have to manually add double quotes around it.
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
-    Set-PowerPlan
-    Sets all local PowerPlans.
+    Set-PowerPlan -PowerPlan <Select_PowerPlan>
+    Sets local PowerPlans to the selected one.
 .EXAMPLE
-    Set-PowerPlan -OnlyActive
-    Sets only active local PowerPlan.
-.EXAMPLE
-    Set-PowerPlan -ComputerName <Hostname> -OnlyActive
-    Sets only active PowerPlan remotely.
+    Set-PowerPlan -ComputerName <Hostname> -RemotePowerPlan <Select_RemotePowerPlan> 
+    Sets remnote PowerPlans to the selected one.
 #>
 
 Function Set-PowerPlan {
@@ -43,13 +42,10 @@ Function Set-PowerPlan {
     process {
         If ($ComputerName) {
             #Set remote PowerPlan
-            Get-CimInstance -ClassName Win32_PowerPlan -Namespace root\cimv2\power -ComputerName $ComputerName -Filter "ElementName = '$RemotePowerPlan'" | Set-CimInstance -Property @{isActive="true"}
+            (Get-WmiObject -Namespace root\cimv2\power -Class Win32_PowerPlan -Filter "ElementName = '$RemotePowerPlan'" -ComputerName $ComputerName).Activate()
         } Else {
             #Set local PowerPlan
-            Get-CimInstance -ClassName Win32_PowerPlan -Namespace root\cimv2\power -Filter "ElementName = '$PowerPlan'" | Set-CimInstance -Property @{isActive="true"}
+            (Get-WmiObject -Namespace root\cimv2\power -Class Win32_PowerPlan -Filter "ElementName = '$PowerPlan'").Activate()
         }
     }
 }
-
-#$powerPlan = Get-WmiObject -Namespace root\cimv2\power -Class Win32_PowerPlan -Filter "ElementName = 'High Performance'"
-#$powerPlan.Activate()
