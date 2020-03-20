@@ -6,7 +6,6 @@
 	Based on port of C# code from http://www.west-wind.com/Weblog/posts/197245.aspx
 .NOTES
 	Author: Robin Hermann
-	(from PowerShell-Module PSTemplatizer)
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
@@ -28,7 +27,6 @@ Function Get-FileEncoding {
 		try {
 			try {
 				[byte[]]$byte = Get-Content -AsByteStream -ReadCount 4 -TotalCount 4 -LiteralPath $Path
-				
 			} catch {
 				[byte[]]$byte = Get-Content -Encoding Byte -ReadCount 4 -TotalCount 4 -LiteralPath $Path
 				$legacyEncoding = $true
@@ -38,7 +36,7 @@ Function Get-FileEncoding {
 				if ($legacyEncoding) { 
 					"unknown" 
 				} else {
-					[System.Text.Encoding]::Default 
+					[System.Text.Encoding]::Default
 				}
 			}
 		} catch {
