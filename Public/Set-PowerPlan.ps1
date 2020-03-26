@@ -11,10 +11,10 @@
     http://wiki.webperfect.ch
 .EXAMPLE
     Set-PowerPlan -PowerPlan <Select_PowerPlan>
-    Sets local PowerPlans to the selected one.
+    Set local PowerPlan to the selected one.
 .EXAMPLE
     Set-PowerPlan -ComputerName <Hostname> -RemotePowerPlan <Select_RemotePowerPlan> 
-    Sets remnote PowerPlans to the selected one.
+    Set remote PowerPlan to the selected one.
 #>
 
 Function Set-PowerPlan {
