@@ -52,7 +52,7 @@ Function Get-Uptime {
         function Get-InnerUptime {
             param(
                 $ComputerName,
-                $Credential # -> tt have to be not use SecureString
+                $Credential # -> # PSScriptAnalyzerTipp: must not use SecureString
             )
 
             # In case pipeline input contains ComputerName property
