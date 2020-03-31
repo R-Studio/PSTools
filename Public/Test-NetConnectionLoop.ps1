@@ -8,6 +8,9 @@
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
+    Test-NetConnectionLoop -Destinations "Node01" 
+    Test connections using ICMP-Pakets (Ping) to "Node01" with an intervall of 1s (default) one day long (default).
+.EXAMPLE
     Test-NetConnectionLoop -Destinations "Node01", "Node02" -Intervall 500 -IntervallUnit ms -DurationInDays 1
     Test connections using ICMP-Pakets (Ping) to "Node01" and "Node02" with an intervall of 500ms one day long.
 .EXAMPLE
@@ -16,26 +19,27 @@
 #>
 
 Function Test-NetConnectionLoop {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='ICMP')]
  
     param(
         [Parameter(Position=0, mandatory=$true)]
         [array] $Destinations,
  
-        [Parameter(Position=1, mandatory=$false)]
+        [Parameter(ParameterSetName="TCP", Position=1, mandatory=$false)]
         [int] $Port,
  
         [Parameter(Position=2, mandatory=$false)]
         [string] $Logfile,
  
-        [Parameter(Position=3, mandatory=$true)]
-        [int] $Intervall,
+        [Parameter(ParameterSetName="ICMP", Position=3, mandatory=$false)]
+        [int] $Intervall = 1,
  
-        [Parameter(Position=4, mandatory=$true)]
-        [string] $IntervallUnit,
+        [Parameter(ParameterSetName="ICMP", Position=4, mandatory=$false)]
+        [ValidateSet("s", "ms")]
+        [string] $IntervallUnit = "s",
  
-        [Parameter(Position=5, mandatory=$true)]
-        [int] $DurationInDays
+        [Parameter(Position=5, mandatory=$false)]
+        [int] $DurationInDays = 1
     )
  
     process {
@@ -80,3 +84,4 @@ Function Test-NetConnectionLoop {
         }
     }
 }
+
