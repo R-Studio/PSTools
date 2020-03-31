@@ -84,4 +84,3 @@ Function Test-NetConnectionLoop {
         }
     }
 }
-
