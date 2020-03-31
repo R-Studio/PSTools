@@ -1,23 +1,18 @@
 <#
 .SYNOPSIS
-Disk Space Usage of all Files between a specified time period.
- 
+    Disk Space Usage of all Files between a specified time period.
 .DESCRIPTION
-Disk Space Usage of all Files between a specified time period.
- 
+    Disk Space Usage of all Files between a specified time period.
 .NOTES
-Author: Robin Hermann
- 
+    Author: Robin Hermann
 .LINK
-http://wiki.webperfect.ch
- 
+    http://wiki.webperfect.ch
 .EXAMPLE
-Get-SumOfAllFiles -Path "C:\ProgramData\Veeam\Backup" -TimePeriodToNow -30
-Disk space usage of all files under a specified path with a creation-time between now and 30 days in the past.
- 
+    Get-SumOfAllFiles -Path "C:\ProgramData\Veeam\Backup" -TimePeriodToNow -30
+    Disk space usage of all files under a specified path with a creation-time between now and 30 days in the past.
 .EXAMPLE
-Get-SumOfAllFiles -Path "\\<hostname>\c$\ProgramData\Veeam\Backup" -TimePeriodToNow -30 -Unit KB
-Disk space usage of all files under a specified remote path with a creation-time between now and 30 days in the past in KB.
+    Get-SumOfAllFiles -Path "\\<hostname>\c$\ProgramData\Veeam\Backup" -TimePeriodToNow -30 -Unit KB
+    Disk space usage of all files under a specified remote path with a creation-time between now and 30 days in the past in KB.
 #>
  
  
