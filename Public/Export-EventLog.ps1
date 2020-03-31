@@ -30,6 +30,10 @@ function Export-EventLog {
         $logFile.backupeventlog($Destination + $ExportFileName) | Out-Null
 
         Write-Host "SUCCESS: The EventLog $LogName is exported to $Destination on $ComputerName" -ForegroundColor Green
+        Write-Host "SUCCESS: Open Explorer with the path to the exported file..." -ForegroundColor Gray
+
+        $FormatedDestination = $Destination -replace ":", "$"
+        Invoke-Item \\$ComputerName\$FormatedDestination
     }
 }
 
