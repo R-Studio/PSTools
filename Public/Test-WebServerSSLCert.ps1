@@ -1,7 +1,7 @@
 Function Test-WebServerSSLCert {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=0)]
         [string]$URL,
 
         [Parameter(Position = 1)]
@@ -12,7 +12,7 @@ Function Test-WebServerSSLCert {
         [Net.WebProxy]$Proxy,
 
         [Parameter(Position = 3)]
-        [int]$Timeout = 60000,
+        [int]$Timeout = 3000,
         [switch]$UseUserContext
     )
      
@@ -58,6 +58,10 @@ Function Test-WebServerSSLCert {
             })
         $ConnectionInformation.PSObject.TypeNames.Add("Indented.LDAP.ConnectionInformation")
         $ConnectionInformation
+        If (!$SAN) {
+            Write-Host "SubjectAlternativeNames is empty. That means modern browsers such as Chrome & Firefox (not IE) shows a security warning." -ForegroundColor Yellow
+        }
+        
         $chain.Reset()
         [Net.ServicePointManager]::ServerCertificateValidationCallback = $null
     } else {
