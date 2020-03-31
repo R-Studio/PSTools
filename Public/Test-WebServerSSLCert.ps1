@@ -27,7 +27,8 @@ Function Test-WebServerSSLCert {
     $WebRequest.Credentials = $null
     $WebRequest.Timeout = $Timeout
     $WebRequest.AllowAutoRedirect = $true
-    [Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+    [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
     try {
         $Response = $WebRequest.GetResponse() 
