@@ -1,3 +1,20 @@
+<#
+.SYNOPSIS
+    Get SSL certification of a web URL. 
+.DESCRIPTION
+    Get SSL certification of a web URL and test the "SubjectAlternativeNames".
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Test-WebServerSSLCert -URL my.application.ch
+    Test the SSL certification of "my.application.ch" on port 443 (default).
+.EXAMPLE
+    Test-WebServerSSLCert -URL my.application.ch -Port 8000
+    Test the SSL certification of "my.application.ch" on port 8000.
+#>
+
 Function Test-WebServerSSLCert {
     [CmdletBinding()]
     param(
