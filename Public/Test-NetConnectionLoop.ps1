@@ -1,3 +1,20 @@
+<#
+.SYNOPSIS
+    Test connection in a loop.
+.DESCRIPTION
+    Test connections to an computer or an array of computers and output this in a logfile if you want.
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Test-NetConnectionLoop -Destinations "Node01", "Node02" -Intervall 500 -IntervallUnit ms -DurationInDays 1
+    Test connections using ICMP-Pakets (Ping) to "Node01" and "Node02" with an intervall of 500ms one day long.
+.EXAMPLE
+    Test-NetConnectionLoop -Destinations "Node01", "Node02" -Port 3389 -DurationInDays 1
+    Test connections with port 3389 (RDP) using TCP to "Node01" and "Node02" one day long.
+#>
+
 Function Test-NetConnectionLoop {
     [CmdletBinding()]
  
