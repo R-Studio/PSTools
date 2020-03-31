@@ -9,7 +9,7 @@
     http://wiki.webperfect.ch
 .EXAMPLE
     Start-LoopClusterVMMove -Cluster Cluster01 -VM VM01 -Period 2
-    Start live migrate "VM01" in Cluster "Cluster01" for 2 Days in a loop.
+    Start live migrate "VM01" in Cluster "Cluster01" for 2 Days in a loop using FailoverCluster.
 #>
 
 Function Start-LoopClusterVMMove {
