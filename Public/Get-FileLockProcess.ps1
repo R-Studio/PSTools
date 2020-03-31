@@ -9,7 +9,6 @@
 .PARAMETER FilePath
     This parameter is MANDATORY.
     This parameter takes a string that represents a full path to a file.
- 
 .EXAMPLE
     # On Windows...
     PS C:\Users\username> Get-FileLockProcess -FilePath "C:\Users\Username\Downloads\call_activity_2017_Nov.xlsx"

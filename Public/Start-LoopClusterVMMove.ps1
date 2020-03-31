@@ -8,7 +8,8 @@
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
-    Start-LoopClusterVMMove -Cluster <ClusterName> -VM <VMName> -Period <How_long_in_Days>
+    Start-LoopClusterVMMove -Cluster Cluster01 -VM VM01 -Period 2
+    Live migrate "VM01" in Cluster "Cluster01" for 2 Days in a loop using FailoverCluster.
 #>
 
 Function Start-LoopClusterVMMove {

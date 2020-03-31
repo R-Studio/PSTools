@@ -2,11 +2,10 @@
 .SYNOPSIS
     Configure the PageFile location/drive, initialsize and maximumsize.
 .DESCRIPTION
-    Configure the PageFile location/drive, initialsize and maximumsize.    
     IMPORTANT: 
-    The AutomaticManagedPagefile property determines whether the system managed pagefile is enabled. 
-    This capability is not available on windows server 2003,XP and lower versions.
-    Only if it is NOT managed by the system and will also allow you to change these.
+        - The AutomaticManagedPagefile property determines whether the system managed pagefile is enabled. 
+        - This capability is not available on windows server 2003,XP and lower versions.
+        - Only if it is NOT managed by the system and will also allow you to change these.
 .NOTES
     Author: Robin Hermann
 .LINK

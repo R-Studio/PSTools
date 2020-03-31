@@ -9,9 +9,9 @@
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
-    Start-LoopClusterNodeDraining -Cluster <ClusterName> -Period <How_long_in_Days>
+    Start-LoopClusterNodeDraining -Cluster Cluster01 -Period 2
+    Draining the ClusterNodes of Cluster "Cluster01" for 2 Days in a loop using FailoverCluster.
 #>
-
 
 Function Start-LoopClusterNodeDraining {
     param (

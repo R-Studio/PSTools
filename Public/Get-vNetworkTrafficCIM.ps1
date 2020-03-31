@@ -1,12 +1,18 @@
 <#
 .Synopsis
-   Get-vNetworkTrafficCIM
+    Get-vNetworkTrafficCIM
 .DESCRIPTION
-   Shows the Traffic of the vNICs of the VMs on a Hyper-V Node
+    Shows the Traffic of the vNICs of the VMs on a Hyper-V Node
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
 .EXAMPLE
-   Get-vNetworkTrafficCIM -ComputerName <ComputerName>
+    Get-vNetworkTrafficCIM -ComputerName <ComputerName>
+    Show the virtual network traffic on a remote computer.
 .EXAMPLE
-   Get-vNetworkTrafficCIM -ComputerName HyperVNode01 -VMName VM01 -Unit MB/s -SortBy Adapter
+    Get-vNetworkTrafficCIM -ComputerName HyperVNode01 -VMName VM01 -Unit MB/s -SortBy Adapter
+    Show the virtual network traffic of "VM01" on "HyperVNode01" in "MB/s".
 #>
  
 Function Get-vNetworkTrafficCIM {

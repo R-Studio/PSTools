@@ -1,10 +1,22 @@
-# PSTools
-A PowerShell module with some usefull PowerShell functions
--> This repository is still in progress
+# PSTools (still in progress)
+PSTool is a PowerShell module with some usefull PowerShell functions, espescially for System Engineers and System Administrators. 
+The module contains mainly functions for Windows Environments, but feel free to add also functions for Linux environments.
+
+> Please be carefull and test the functions before you use it in your production environments.
+> I am very appreciative for any help, extension or comments.
+
 
 # To-Do's
 * Replace all "env:COMPUTERNAME" with @PSBoundParameters
 * Adding Descriptions/Helps to all functions
+---
 
+## License
+Copyright 2020 Robin Hermann
 
-*Please be carefull and test the functions before you use it in your production environments.*
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

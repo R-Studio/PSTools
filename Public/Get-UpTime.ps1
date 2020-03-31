@@ -1,21 +1,16 @@
 <#
 .SYNOPSIS
-  Outputs the last bootup time and uptime for one or more computers.
-  
+    Outputs the last bootup time and uptime for one or more computers.
 .DESCRIPTION
-  Outputs the last bootup time and uptime for one or more computers.
-  
+    Outputs the last bootup time and uptime for one or more computers.
 .PARAMETER ComputerName
-  One or more computer names. The default is the current computer. Wildcards are not supported.
-  
+    One or more computer names. The default is the current computer. Wildcards are not supported.
 .PARAMETER Credential
-  Specifies credentials that have permission to connect to the remote computer. This parameter is ignored for the current computer.
-  
+    Specifies credentials that have permission to connect to the remote computer. This parameter is ignored for the current computer.
 .EXAMPLE
-  Get-Uptime -ComputerName <Hostname>
-  
+    Get-Uptime -ComputerName <Hostname>
 .OUTPUTS
-  PSObjects containing the computer name, the last bootup time, and the uptime.
+    PSObjects containing the computer name, the last bootup time, and the uptime.
 #>
  
 Function Get-Uptime {
@@ -52,7 +47,7 @@ Function Get-Uptime {
         function Get-InnerUptime {
             param(
                 $ComputerName,
-                $Credential # -> tt have to be not use SecureString
+                $Credential # -> # PSScriptAnalyzerTipp: must not use SecureString
             )
 
             # In case pipeline input contains ComputerName property

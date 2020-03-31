@@ -1,7 +1,24 @@
+<#
+.SYNOPSIS
+    Get SSL certification of a web URL. 
+.DESCRIPTION
+    Get SSL certification of a web URL and test the "SubjectAlternativeNames".
+.NOTES
+    Author: Robin Hermann
+.LINK
+    http://wiki.webperfect.ch
+.EXAMPLE
+    Test-WebServerSSLCert -URL my.application.ch
+    Test the SSL certification of "my.application.ch" on port 443 (default).
+.EXAMPLE
+    Test-WebServerSSLCert -URL my.application.ch -Port 8000
+    Test the SSL certification of "my.application.ch" on port 8000.
+#>
+
 Function Test-WebServerSSLCert {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=0)]
         [string]$URL,
 
         [Parameter(Position = 1)]
@@ -12,7 +29,7 @@ Function Test-WebServerSSLCert {
         [Net.WebProxy]$Proxy,
 
         [Parameter(Position = 3)]
-        [int]$Timeout = 60000,
+        [int]$Timeout = 3000,
         [switch]$UseUserContext
     )
      
@@ -27,7 +44,8 @@ Function Test-WebServerSSLCert {
     $WebRequest.Credentials = $null
     $WebRequest.Timeout = $Timeout
     $WebRequest.AllowAutoRedirect = $true
-    [Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+    [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
     try {
         $Response = $WebRequest.GetResponse() 
@@ -57,6 +75,10 @@ Function Test-WebServerSSLCert {
             })
         $ConnectionInformation.PSObject.TypeNames.Add("Indented.LDAP.ConnectionInformation")
         $ConnectionInformation
+        If (!$SAN) {
+            Write-Host "SubjectAlternativeNames is empty. That means modern browsers such as Chrome & Firefox (not IE) shows a security warning." -ForegroundColor Yellow
+        }
+        
         $chain.Reset()
         [Net.ServicePointManager]::ServerCertificateValidationCallback = $null
     } else {
