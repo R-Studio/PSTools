@@ -11,7 +11,7 @@ The module contains mainly functions for Windows Environments, but feel free to 
 * Adding Descriptions/Helps to all functions
 ---
 
-# License
+## License
 Copyright 2020 Robin Hermann
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. 
