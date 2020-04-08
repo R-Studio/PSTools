@@ -26,7 +26,7 @@ Function Get-DirectoryStats {
 
         $Folders = Get-ChildItem $Path -Directory | Sort-Object
         foreach ($Folder in $Folders) {
-            $subFolderItems = Get-ChildItem $Folder.FullName -File -Recurse -Force | Measure-Object -Property Length -Sum | Select-Object Sum
+            $subFolderItems = Get-ChildItem $Folder.FullName -File -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum | Select-Object Sum
             $Size = [math]::Round($subFolderItems.sum/1GB,2)
 
             [PSCustomObject]@{
