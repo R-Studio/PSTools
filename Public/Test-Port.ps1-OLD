@@ -1,0 +1,74 @@
+Param($customserver, $customports) 
+ 
+Function Connection-test($server,$singleport) {
+    Return (Test-netConnection $server -port $singleport -WarningAction SilentlyContinue -ErrorAction SilentlyContinue ).TcpTestSucceeded
+}
+ 
+Function Server-test($server,$ports) {
+    if([bool]($server -as [ipaddress]) -ne $true) {
+        $serverip=$null    
+        $serverip = (Test-Connection $server -Count 1 -WarningAction SilentlyContinue -ErrorAction SilentlyContinue).IPV4Address.ipaddresstostring
+    } 
+    else {[string]$serverip = $server}
+ 
+    if($serverip) {
+        ('{0,-55} {1,-20}' -f "`t$env:COMPUTERNAME -> $server", "$serverip") | write-host -NoNewline -fore DarkGray
+        "TCP" | Write-host -NoNewLine -Fore Green
+ 
+        foreach($singleport in ($ports.trim()).split(",")) {
+            $status = connection-test $server $singleport
+            if($status){ 
+                Write-host ",$status`:$singleport" -NoNewline -fore Green 
+            }
+            else { 
+                Write-host ",$status`:$singleport" -NoNewline -fore Red   
+            }
+        }
+    }
+    else {
+        write-host ('{0,-55}' -f "`t$env:COMPUTERNAME -> $server") -NoNewline -fore DarkGray
+        Write-host " DNS FAILED" -NoNewline -fore Red
+        Write-host "`r"
+        return
+    }
+    Write-host "`r"
+}
+ 
+Function test-start($servers, $ports) {
+    foreach($server in $servers) {
+        if(!$server){break}
+        Server-test $server $ports
+    }
+}
+ 
+Function Main($customserver, $customports) {
+    if(($customserver) -and ($customports)) {
+        Write-host "Starting custom port test" -ForegroundColor Yellow
+        test-start $customserver $customports
+    }
+    Else {
+        #Write-host "Starting default port test" -ForegroundColor Yellow
+        [array]$ports  = @()
+        [array]$server = @()
+ 
+        # Replace the Servers
+        ###########################################################
+        # Beispiel-Server und Ports
+        # Google Web-Server
+        $ports   = "80,443,9443"
+        $server  = "google.ch"
+        test-start $server $ports
+ 
+        # Windows AD servers
+        $ports   = "53,88,135,389,445,464,636,3268,3269"
+        $server  = "dc02.lab",
+                   "dc01.lab"
+        test-start $server $ports
+        ###########################################################
+        # End of replacement
+ 
+    }
+    return
+}
+cls
+Main $customserver $customports
