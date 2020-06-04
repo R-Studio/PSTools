@@ -7,7 +7,6 @@
     Author: Robin Hermann
 .LINK
     http://wiki.webperfect.ch
-    Source: https://4sysops.com/archives/disable-windows-10-telemetry-with-a-powershell-script/
 .EXAMPLE
     ConvertTo-Base64 -InputFile <YourFileToConvert> -CopyToClipboard
     Converts your file to Base64 and copy this to clipboard.
