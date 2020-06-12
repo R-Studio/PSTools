@@ -12,7 +12,6 @@
     Get free disk space of all volumes with driveletter on a remote system.
 #>
 
-
 Function Get-FreeDiskSpace {
     [CmdletBinding()]
  
@@ -22,7 +21,11 @@ Function Get-FreeDiskSpace {
     )
  
     process {
-        $Volumes = (Get-Volume @PSBoundParameters).DriveLetter
+        If (!$ComputerName) {
+            $Volumes = (Get-Volume).DriveLetter
+        } else {
+            $Volumes = (Get-Volume -CimSession $PSBoundParameters.Values).DriveLetter
+        }
  
         Foreach ($Volume in $Volumes) {
             $Volume = $Volume + ":"
