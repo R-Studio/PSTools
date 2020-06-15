@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-    Get free disk space of all volumes with driveletter on a remote system.
+    Get free disk space of all disk volumes with an driveletter on a remote system.
 .DESCRIPTION
-    Get free disk space of all volumes with driveletter on a remote system.
+    Get free disk space of all disk volumes with an driveletter on a remote system.
 .NOTES
     Author: Robin Hermann
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
     Get-FreeDiskSpace -ComputerName <Hostname>
-    Get free disk space of all volumes with driveletter on a remote system.
+    Get free disk space of all disk volumes with an driveletter on a remote system.
 #>
 
 Function Get-FreeDiskSpace {
@@ -22,9 +22,9 @@ Function Get-FreeDiskSpace {
  
     process {
         If (!$ComputerName) {
-            $Volumes = (Get-Volume).DriveLetter
+            $Volumes = (Get-Volume | Where-Object {$_.DriveType -ne "CD-ROM"}).DriveLetter
         } else {
-            $Volumes = (Get-Volume -CimSession $PSBoundParameters.Values).DriveLetter
+            $Volumes = (Get-Volume -CimSession $PSBoundParameters.Values | Where-Object {$_.DriveType -ne "CD-ROM"}).DriveLetter
         }
  
         Foreach ($Volume in $Volumes) {
