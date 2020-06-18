@@ -8,14 +8,14 @@
 .LINK
     http://wiki.webperfect.ch
 .EXAMPLE
-    Show-Colors
+    Show-ColorTable
     Shows all Windows console colors (foreground & background colors).
 .EXAMPLE
-    Show-Colors -WithoutBackgroundColor
+    Show-ColorTable -WithoutBackgroundColor
     Shows all Windows console colors (without background colors).
 #>
 
-Function Show-Colors {
+Function Show-ColorTable {
     param(
         [Parameter(Mandatory=$false, Position=0)]
         [switch]$WithoutBackgroundColor
