@@ -122,7 +122,7 @@ Function Search-IPsinSubnet {
         $query = $bucket -join "' or Address='"
         
         # add metadata to property names for a greater table view (cosmetics)
-        $TableSize = @{Expression={$_.Address}; Name="Address"; Width=12},
+        $TableSize = @{Expression={$_.Address}; Name="Address"; Width=15},
                      @{Expression={$_.Online}; Name="Online"; Width=7},
                      @{Expression={$_.DNSName}; Name="DNSName"; Width=25},
                      @{Expression={$_.Status}; Name="Status"; Width=35},
