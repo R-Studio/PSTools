@@ -37,17 +37,19 @@ Function Search-IPsinSubnet {
             $pool.ApartmentState = "MTA"
             $pool.Open()
             $runspaces = @()
-            
+
+            # Check OS version (compatibility for older OS's than Windows 10)
+            $OSBuildNumber = (Get-CimInstance -ClassName win32_operatingsystem).BuildNumber
+
             # The script you want run against each host
             $scriptblock = {
                 # Take the IP address as a parameter
-                param ([string]$ip)
+                param ([string]$IP)
                 
                 # Ping IP address    
-                $online = Test-Connection $ip -Count 1 -ErrorAction 0
+                $online = Test-Connection $IP -Count 1 -ErrorAction 0
         
                 # Compatibility for older OS's than Windows 10 (Some fieldnames changed in the built-in function Windows "Test-Connection")
-                $OSBuildNumber = (Get-CimInstance -ClassName win32_operatingsystem).BuildNumber
                 If ($OSBuildNumber -gt 14393) {
                     $TestConnectionFieldIP = "Destination"
                 } Else {
@@ -130,7 +132,7 @@ Function Search-IPsinSubnet {
             # Loop through numbers 1 to 254 
             foreach ($hostnumber in 1..254) {
                 # Set full IP address
-                $ip = $network + $hostnumber
+                $IP = $network + $hostnumber
         
                 # Create a PowerShell runspace
                 $runspace = [powershell]::Create()
@@ -139,7 +141,7 @@ Function Search-IPsinSubnet {
                 $runspace.AddScript($scriptblock) | Out-Null
         
                 # Add IP address as an argument to the scriptblock (use $null to avoid noise)
-                $runspace.AddArgument($ip) | Out-Null
+                $runspace.AddArgument($IP) | Out-Null
         
                 # Add/create new runspace
                 $runspace.RunspacePool = $pool
@@ -148,14 +150,14 @@ Function Search-IPsinSubnet {
             
             # Prepare the progress bar
             $currentcount = 0
-            $totalcount = ($runspaces | measure-object).count
+            $totalcount = ($runspaces).count
         
             # Pause until all runspaces have completed
             $table = while ($runspaces.status -ne $null) {
                 $completed = $runspaces | Where-Object { $_.Status.iscompleted -eq $true }
                 
                 # Update progress bar
-                $currentcount = $currentcount + ($completed | measure-object).count
+                $currentcount = $currentcount + ($completed).count
                 write-progress -activity "Pinging IP Addresses.." -PercentComplete (([int]$currentcount/[int]$totalcount)*100)
                 
                 # Clear completed runspaces
