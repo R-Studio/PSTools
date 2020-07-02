@@ -1,8 +1,9 @@
 <#
 .SYNOPSIS
-    Search/Scan an IP, hostname or subnet.
+    Search/Scan a subnet.
 .DESCRIPTION
-    Search/Scan an IP, hostname or subnet. (It is a little bit like an IP-Scanner)
+    Search/Scan a subnet fast because of parallel processing. (It is a little bit like an IP-Scanner)
+    Parallel processing was implemented with PowerShell Runspace pool. Because of the overhead with PowerShell Jobs.
 .NOTES
     Author: Robin Hermann
 .LINK
