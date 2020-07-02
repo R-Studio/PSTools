@@ -18,7 +18,7 @@ Function Search-IPsinSubnet {
         [Parameter(Mandatory=$true, ValueFromPipeline=$false, Position=0)]
         [string]$Network,
 
-        [Parameter(Mandatory=$false, ValueFromPipeline=$false, Position=1)]
+        [Parameter(Mandatory=$false, Position=1)]
         [switch]$OutGridView
 
         #[Parameter(Mandatory=$false, ValueFromPipeline=$false, Position=2)]
@@ -86,6 +86,7 @@ Function Search-IPsinSubnet {
                 
                     # hash table with calculated property that translates
                     # numeric return value into friendly text
+                    # This is only for Windows older than Win 10
                     $statusFriendlyText = @{
                         # name of column
                         Name = 'Status'
@@ -155,12 +156,12 @@ Function Search-IPsinSubnet {
             $totalcount = ($runspaces).count
         
             # Pause until all runspaces have completed
-            $table = while ($runspaces.status -ne $null) {
-                $completed = $runspaces | Where-Object { $_.Status.iscompleted -eq $true }
+            $table = while ($runspaces.status -ne $null) { # null comparison: the "$null" have to be on the right side
+                $completed = $runspaces | Where-Object {$_.Status.iscompleted -eq $true}
                 
                 # Update progress bar
                 $currentcount = $currentcount + ($completed).count
-                write-progress -activity "Pinging IP Addresses.." -PercentComplete (([int]$currentcount/[int]$totalcount)*100)
+                Write-Progress -Activity "Pinging IP Addresses.." -PercentComplete (([int]$currentcount/[int]$totalcount)*100)
                 
                 # Clear completed runspaces
                 foreach ($runspace in $completed) {
@@ -169,6 +170,7 @@ Function Search-IPsinSubnet {
                 }
             }
 
+            # add "GUI" support
             If ($OutGridView) {
                 $table | Out-GridView
             } Else {
