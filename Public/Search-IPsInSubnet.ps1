@@ -16,8 +16,10 @@
 Function Search-IPsinSubnet {
     param(
         [Parameter(Mandatory=$true, ValueFromPipeline=$false, Position=0)]
-        [string]$Network
+        [string]$Network,
 
+        [Parameter(Mandatory=$false, ValueFromPipeline=$false, Position=1)]
+        [switch]$OutGridView
 
         #[Parameter(Mandatory=$false, ValueFromPipeline=$false, Position=2)]
         #[int]$TimeoutMS = 1000
@@ -39,7 +41,7 @@ Function Search-IPsinSubnet {
             $runspaces = @()
 
             # Check OS version (compatibility for older OS's than Windows 10)
-            $OSBuildNumber = (Get-CimInstance -ClassName win32_operatingsystem).BuildNumber
+            $OSBuildNumber = (Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber
 
             # The script you want run against each host
             $scriptblock = {
@@ -167,7 +169,11 @@ Function Search-IPsinSubnet {
                 }
             }
 
-            $table | Format-Table
+            If ($OutGridView) {
+                $table | Out-GridView
+            } Else {
+                $table | Format-Table
+            }
         
             # Clean-up Runspace Pool
             $pool.Close()
