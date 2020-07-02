@@ -13,28 +13,29 @@
     Search/Scan your Network "192.168.1.x".
 #>
 
-
 Function Search-IPsinSubnet {
     param(
         [Parameter(Mandatory=$true, ValueFromPipeline=$false, Position=0)]
-        [string]$Network,
+        [string]$Network
 
-        [int]$TimeoutMS = 1000
+
+        #[Parameter(Mandatory=$false, ValueFromPipeline=$false, Position=2)]
+        #[int]$TimeoutMS = 1000
     )
 
     process{
         # Gather network address (must end in .0)
         #$network = read-host "Enter network address";
-        $Networkcheck = $network.substring($network.length-2)
+        $Networkcheck = $Network.Substring($Network.length-2)
         
         if ($Networkcheck -eq ".0") {
             # Drop the .0 from the network address
             $Network = $Network.Substring(0,$Network.length-1)
-        
+
             # Create Runspace Pool with 500 threads
             $pool = [RunspaceFactory]::CreateRunspacePool(1, 500)
             $pool.ApartmentState = "MTA"
-            $pool.open()
+            $pool.Open()
             $runspaces = @()
             
             # The script you want run against each host
@@ -43,7 +44,7 @@ Function Search-IPsinSubnet {
                 param ([string]$ip)
                 
                 # Ping IP address    
-                $online = Test-Connection $ip -count 1 -ea 0 
+                $online = Test-Connection $ip -Count 1 -ErrorAction 0
         
                 # Compatibility for older OS's than Windows 10 (Some fieldnames changed in the built-in function Windows "Test-Connection")
                 $OSBuildNumber = (Get-CimInstance -ClassName win32_operatingsystem).BuildNumber
@@ -56,27 +57,27 @@ Function Search-IPsinSubnet {
                 # Print IP address if online
                 if ($online) {
                     $StatusCode_MappingTable = @{
-                    0 = 'Success'
-                    11001 = 'Buffer Too Small'
-                    11002 = 'Destination Net Unreachable'
-                    11003 = 'Destination Host Unreachable'
-                    11004 = 'Destination Protocol Unreachable'
-                    11005 = 'Destination Port Unreachable'
-                    11006 = 'No Resources'
-                    11007 = 'Bad Option'
-                    11008 = 'Hardware Error'
-                    11009 = 'Packet Too Big'
-                    11010 = 'Request Timed Out'
-                    11011 = 'Bad Request'
-                    11012 = 'Bad Route'
-                    11013 = 'TimeToLive Expired Transit'
-                    11014 = 'TimeToLive Expired Reassembly'
-                    11015 = 'Parameter Problem'
-                    11016 = 'Source Quench'
-                    11017 = 'Option Too Big'
-                    11018 = 'Bad Destination'
-                    11032 = 'Negotiating IPSEC'
-                    11050 = 'General Failure'
+                        0 = 'Success'
+                        11001 = 'Buffer Too Small'
+                        11002 = 'Destination Net Unreachable'
+                        11003 = 'Destination Host Unreachable'
+                        11004 = 'Destination Protocol Unreachable'
+                        11005 = 'Destination Port Unreachable'
+                        11006 = 'No Resources'
+                        11007 = 'Bad Option'
+                        11008 = 'Hardware Error'
+                        11009 = 'Packet Too Big'
+                        11010 = 'Request Timed Out'
+                        11011 = 'Bad Request'
+                        11012 = 'Bad Route'
+                        11013 = 'TimeToLive Expired Transit'
+                        11014 = 'TimeToLive Expired Reassembly'
+                        11015 = 'Parameter Problem'
+                        11016 = 'Source Quench'
+                        11017 = 'Option Too Big'
+                        11018 = 'Bad Destination'
+                        11032 = 'Negotiating IPSEC'
+                        11050 = 'General Failure'
                     }
                 
                     # hash table with calculated property that translates
@@ -131,17 +132,18 @@ Function Search-IPsinSubnet {
                 # Set full IP address
                 $ip = $network + $hostnumber
         
-                $runspace = [powershell]::create()
+                # Create a PowerShell runspace
+                $runspace = [powershell]::Create()
         
                 # Add script block to runspace (use $null to avoid noise)
-                $null = $runspace.addscript($scriptblock)
+                $runspace.AddScript($scriptblock) | Out-Null
         
                 # Add IP address as an argument to the scriptblock (use $null to avoid noise)
-                $null = $runspace.addargument($ip)
+                $runspace.AddArgument($ip) | Out-Null
         
                 # Add/create new runspace
-                $runspace.runspacepool = $pool
-                $runspaces += [pscustomobject]@{pipe=$runspace; Status=$runspace.begininvoke() }
+                $runspace.RunspacePool = $pool
+                $runspaces += [pscustomobject]@{pipe=$runspace; Status=$runspace.BeginInvoke()}
             }
             
             # Prepare the progress bar
@@ -150,24 +152,24 @@ Function Search-IPsinSubnet {
         
             # Pause until all runspaces have completed
             $table = while ($runspaces.status -ne $null) {
-                $completed = $runspaces | Where-Object { $_.status.iscompleted -eq $true }
+                $completed = $runspaces | Where-Object { $_.Status.iscompleted -eq $true }
                 
                 # Update progress bar
                 $currentcount = $currentcount + ($completed | measure-object).count
-                write-progress -activity "Pinging IP Addresses..." -percentcomplete (([int]$currentcount/[int]$totalcount)*100)
+                write-progress -activity "Pinging IP Addresses.." -PercentComplete (([int]$currentcount/[int]$totalcount)*100)
                 
                 # Clear completed runspaces
                 foreach ($runspace in $completed) {
-                    $runspace.pipe.endinvoke($runspace.status)
-                    $runspace.status = $null
+                    $runspace.pipe.EndInvoke($runspace.Status)
+                    $runspace.Status = $null
                 }
             }
 
             $table | Format-Table
         
             # Clean-up Runspace Pool
-            $pool.close()
-            $pool.dispose()
+            $pool.Close()
+            $pool.Dispose()
         
         } else {
             write-host "THIS $Network IS NOT A VALID NETWORK ADDRESS" -ForegroundColor Red
