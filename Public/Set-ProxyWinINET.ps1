@@ -10,7 +10,7 @@
     Setting proxy information
     Set-InternetProxy -proxy "proxy:7890"
 .Example
-    Setting proxy information and (optinal) Automatic Configuration Script 
+    Setting proxy information and (optional) Automatic Configuration Script 
     Set-InternetProxy -proxy "proxy:7890" -acs "http://proxy:7892"
 #>
 
