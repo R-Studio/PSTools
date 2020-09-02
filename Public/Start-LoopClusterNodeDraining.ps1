@@ -19,11 +19,16 @@ Function Start-LoopClusterNodeDraining {
         [string]$Cluster,
 
         [Parameter(Mandatory=$false)]
-        [datetime]$Period = (Get-Date).AddDays(10)
+        $Period = (Get-Date).AddDays(10)
     )
 
     process {
-        while ((get-date) -le $Period){
+        # Convert user input to datetime
+        If ($Period -isnot [datetime]) {
+            $Period = (Get-Date).AddDays($Period)
+        }
+
+        while ((Get-Date) -le $Period){
             $nodes = Get-ClusterNode -Cluster $cluster
             $pausednode = $nodes | Where-Object {$_.DrainStatus -ne "NotInitiated"}
 
