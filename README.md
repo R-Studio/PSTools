@@ -6,11 +6,6 @@ The module contains mainly functions for Windows Environments, but feel free to 
 > I am very appreciative for any help, extension or comments.
 
 
-# To-Do's
-* Replace all "env:COMPUTERNAME" with @PSBoundParameters
-* Adding Descriptions/Helps to all functions
----
-
 ## License
 Copyright 2020 Robin Hermann
 
