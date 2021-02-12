@@ -3,13 +3,13 @@
     Tests port on computer.   
 .DESCRIPTION   
     Tests port on computer.  
-.PARAMETER computer   
+.PARAMETER ComputerName
     Name of server to test the port connection on. 
-.PARAMETER port   
+.PARAMETER Port   
     Port to test  
-.PARAMETER tcp   
+.PARAMETER TCP
     Use tcp port  
-.PARAMETER udp   
+.PARAMETER UDP
     Use udp port   
 .PARAMETER UDPTimeOut  
     Sets a timeout for UDP port query. (In milliseconds, Default is 1000)   
@@ -23,16 +23,16 @@
     To Do:   
         Add capability to run background jobs for each host to shorten the time to scan.          
 .LINK     
-    https://boeprox.wordpress.org  
+    https://wiki.webperfect.ch
 .EXAMPLE     
-    Test-Port -computer 'server' -port 80   
-    Checks port 80 on server 'server' to see if it is listening   
+    Test-Port -ComputerName <COMPUTER_NAME> -Port 80
+    Checks port 80 on server <COMPUTER_NAME> to see if it is listening   
 .EXAMPLE     
-    'server' | Test-Port -port 80   
-    Checks port 80 on server 'server' to see if it is listening  
+    <COMPUTER_NAME> | Test-Port -Port 80   
+    Checks port 80 on server <COMPUTER_NAME> to see if it is listening  
 .EXAMPLE     
-    Test-Port -computer @("server1","server2") -port 80   
-    Checks port 80 on server1 and server2 to see if it is listening   
+    Test-Port -ComputerName @("Server1","Server2") -Port 80   
+    Checks port 80 on Server1 and Server2 to see if it is listening   
 .EXAMPLE 
     Test-Port -comp dc1 -port 17 -udp -UDPtimeout 10000 
     Server   : dc1 
@@ -45,16 +45,16 @@
     ----------- 
     Queries port 17 (qotd) on the UDP port and returns whether port is open or not 
 .EXAMPLE     
-    @("server1","server2") | Test-Port -port 80   
+    @("server1","server2") | Test-Port -Port 80   
     Checks port 80 on server1 and server2 to see if it is listening   
 .EXAMPLE     
-    (Get-Content hosts.txt) | Test-Port -port 80   
+    (Get-Content hosts.txt) | Test-Port -Port 80   
     Checks port 80 on servers in host file to see if it is listening  
 .EXAMPLE     
-    Test-Port -computer (Get-Content hosts.txt) -port 80   
+    Test-Port -ComputerName (Get-Content hosts.txt) -Port 80   
     Checks port 80 on servers in host file to see if it is listening  
 .EXAMPLE     
-    Test-Port -computer (Get-Content hosts.txt) -port @(1..59)   
+    Test-Port -ComputerName (Get-Content hosts.txt) -Port @(1..59)   
     Checks a range of ports from 1-59 on all servers in the hosts.txt file       
 #> 
 
