@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This function is for massive LiveMigration tests.
+    This function is for massive LiveMigration tests (move a single vm).
 .DESCRIPTION
     This function start LiveMigrating only one VM in a loop using FailoverCluster to make some LiveMigration tests.
 .NOTES
