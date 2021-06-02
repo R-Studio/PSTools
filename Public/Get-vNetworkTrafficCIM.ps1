@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Get-vNetworkTrafficCIM
+    Shows the Traffic of the vNICs
 .DESCRIPTION
     Shows the Traffic of the vNICs of the VMs on a Hyper-V Node
 .NOTES

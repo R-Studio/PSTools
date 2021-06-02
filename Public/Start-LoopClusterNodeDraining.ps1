@@ -1,7 +1,7 @@
 
 <#
 .SYNOPSIS
-    This function is for massive LiveMigration tests.
+    This function is for massive LiveMigration tests (drain on nodes in Cluster).
 .DESCRIPTION
     This function drains all Hyper-V cluster nodes one by one using FailoverCluster to make some LiveMigration tests.
 .NOTES

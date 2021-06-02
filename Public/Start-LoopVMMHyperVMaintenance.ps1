@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This function is for massive LiveMigration tests.
+    This function is for massive LiveMigration tests (start maintenance from VMM).
 .DESCRIPTION
     This function start Maintenance of all Hyper-V nodes in a cluster (one by one) using VMM to make some LiveMigration tests.
 .NOTES
