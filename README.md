@@ -26,6 +26,7 @@ The module contains mainly functions for Windows Environments, but feel free to 
 | Get-InstalledSoftware               | Get all installed from the Uninstall keys in the registry. |
 | Get-LiveMigrationBlackoutTime       | Get the BlackoutTime of each LiveMigration. |
 | Get-MountPointsAndUserDisks         | Get all mountpoints and all UserProfileDisks (Roaming Profiles as a VHDX). |
+| Get-MSIDatabaseInfo                 | Get infos (mandatory properties) from the database of an MSI-file. |
 | Get-NetStat                         | Get information about TCP & UDP connections. |
 | Get-NetworkAdapterConnectionStatus  | Get NIC status with more details then in the built-in windows command. |
 | Get-OSVersion                       | Get the detailed Windows Version with current support channel and updatelevel. |
