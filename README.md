@@ -34,6 +34,7 @@ The module contains mainly functions for Windows Environments, but feel free to 
 | Get-PowerPlan                       | Get Windows PowerPlans. |
 | Get-SumOfAllFiles                   | Disk Space Usage of all Files between a specified time period. |
 | Get-UpTime                          | Outputs the last bootup time and uptime for one or more computers. |
+| Get-VMHealthState                   | Get the VMHealthStates (Heartbeat) of all VMs in a Cluster. |
 | Get-vNetworkTrafficCIM              | Shows the Traffic of the vNICs of the VMs on a Hyper-V Node. |
 | Get-WindowsProxyConfig              | Get information about Windows Proxy configurations. |
 | Get-WindowsUpdateInfoFromWSUS       | Get information about Windows Updates from WSUS. |
