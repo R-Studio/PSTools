@@ -8,7 +8,7 @@
     On Linux, this function returns a PSCustomObject with similar properties.
 .NOTES
     Windows solution credit to: https://stackoverflow.com/a/20623311
-    PowerShell function Author: @pldmgg
+    PowerShell function Author: @pldmgg (https://github.com/pldmgg)
 .PARAMETER FilePath
     This parameter is MANDATORY.
     This parameter takes a string that represents a full path to a file.
