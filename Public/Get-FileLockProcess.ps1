@@ -6,6 +6,8 @@
     System.Diagnostic.Process objects (one or more processes could have a lock on a specific file, which is why
     a List is used).
     On Linux, this function returns a PSCustomObject with similar properties.
+.NOTES
+    Windows solution credit to: https://stackoverflow.com/a/20623311
 .PARAMETER FilePath
     This parameter is MANDATORY.
     This parameter takes a string that represents a full path to a file.
