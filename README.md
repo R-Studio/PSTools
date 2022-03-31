@@ -1,7 +1,7 @@
 # PSTools (still in progress)
 PSTool is a PowerShell module with some useful PowerShell functions, espescially for System Engineers and System Administrators. 
 The module contains mainly functions for Windows Environments, but feel free to add functions for Linux environments.
-_Not all functions were written by me._
+_Not all functions were written by me. This repo merely a collection of useful functions._
 
 > Please be carefull and test the functions before you use it in your production environments.
 > I am very appreciative for any help, extension or comments.
